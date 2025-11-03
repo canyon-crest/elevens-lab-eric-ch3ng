@@ -1,6 +1,5 @@
 
 package Activity3;
-import java.util.Arrays;
 /**
  * This class provides a convenient way to test shuffling methods.
  */
@@ -82,19 +81,11 @@ public class Shuffler3 {
 	 * @param values is an array of integers simulating cards to be shuffled.
 	 */
 	public static void selectionShuffle(int[] values) {
-		/* *** TO BE IMPLEMENTED IN ACTIVITY 3 *** */
-		int size = values.length;
-		int[] selectionShuffled = new int[values.length];
-		int count = 0;
-		while(count < size) {
-			int randomInt = (int)Math.random()*values.length + 1;
-			while(values[randomInt] == -1) {
-				randomInt = (int)Math.random()*values.length + 1;
-			}
-			selectionShuffled[count] = values[randomInt];
-			values[randomInt] = -1;
-			count++;
+		for (int k = values.length - 1; k > 0; k--) {
+		    int r = (int) (Math.random() * (k + 1));
+		    int temp = values[k];
+		    values[k] = values[r];
+		    values[r] = temp;
 		}
-		
 	}
 }

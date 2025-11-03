@@ -53,5 +53,24 @@ public class DeckTester4 {
 		System.out.println();
 
 		/* *** TO BE COMPLETED IN ACTIVITY 4 *** */
+		System.out.println("==================================================");
+		System.out.println("**** Testing shuffle() with a Standard 52-Card Deck ****");
+
+		// Standard 52-card setup
+		String[] ranks52 = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "jack", "queen", "king", "ace"};
+		String[] suits52 = {"spades", "hearts", "diamonds", "clubs"};
+		int[] values52 = {2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11};
+
+		Deck4 standardDeck = new Deck4(ranks52, suits52, values52);
+
+		System.out.println("\nOriginal deck (shuffled automatically in constructor):");
+		System.out.println(standardDeck);
+
+		// Shuffle several times to test randomness
+		for (int i = 1; i <= 3; i++) {
+			System.out.println("After shuffle #" + i + ":");
+			standardDeck.shuffle();
+			System.out.println(standardDeck);
+		}
 	}
 }

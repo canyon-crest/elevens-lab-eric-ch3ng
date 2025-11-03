@@ -33,16 +33,13 @@ public class Deck2 {
 	public Deck2(String[] ranks, String[] suits, int[] values) {
 		/* *** TO BE IMPLEMENTED IN ACTIVITY 2 *** */
 		cards = new ArrayList<Card2>();
-		for(int i = 0; i<suits.length;i++) {
-			for(int j = 0; j < ranks.length;j++) {
-				Card2 newCard = new Card2(ranks[j], suits[i], values[j]);
-				cards.add(newCard);
-			}
-		}
-		size= cards.size();
-		
-	}
-
+        for (int j = 0; j < ranks.length; j++) {
+            for (String suitString : suits) {
+                cards.add(new Card2(ranks[j], suitString, values[j]));
+            }
+        }
+        size = cards.size();
+    }
 
 	/**
 	 * Determines if this deck is empty (no undealt cards).
@@ -50,10 +47,7 @@ public class Deck2 {
 	 */
 	public boolean isEmpty() {
 		/* *** TO BE IMPLEMENTED IN ACTIVITY 2 *** */
-		if(cards.size() == size) {
-			return true;
-		}
-		return false;
+		return size == 0;
 	}
 
 	/**
@@ -62,11 +56,7 @@ public class Deck2 {
 	 */
 	public int size() {
 		/* *** TO BE IMPLEMENTED IN ACTIVITY 2 *** */
-		int left = 0;
-		if(size - cards.size() != 0) {
-			return left = size - cards.size();
-		}
-		return left;
+		return size;
 	}
 
 	/**
@@ -75,9 +65,14 @@ public class Deck2 {
 	 */
 	public void shuffle() {
 		/* *** TO BE IMPLEMENTED IN ACTIVITY 4 *** */
+		for (int k = cards.size() - 1; k > 0; k--) {
+	        int r = (int)(Math.random() * (k + 1));
+	        Card2 temp = cards.get(k);
+	        cards.set(k, cards.get(r));
+	        cards.set(r, temp);
+	    }
 
-		
-		
+	    size = cards.size()-1;
 	}
 
 	/**
@@ -87,14 +82,14 @@ public class Deck2 {
 	 */
 	public Card2 deal() {
 		/* *** TO BE IMPLEMENTED IN ACTIVITY 2 *** */
-		if(this.isEmpty()) {
-			return null;
-		}
-		Card2 dealtCard = cards.remove(0);
-		size--;
-		return dealtCard;
-	}
+		if (isEmpty()) {
+            return null;
+        }
 
+        size--;
+        Card2 dealtCard = cards.get(size);
+        return dealtCard;
+	}
 	/**
 	 * Generates and returns a string representation of this deck.
 	 * @return a string representation of this deck.

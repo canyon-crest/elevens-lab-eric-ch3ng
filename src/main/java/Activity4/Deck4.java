@@ -63,8 +63,14 @@ public class Deck4 {
 	 * and reset the size to represent the entire deck.
 	 */
 	public void shuffle() {
-		/* *** TO BE IMPLEMENTED IN ACTIVITY 4 *** */
-		this.size = 0; // remove me
+	    size = cards.size();
+	    //idk how to just say selectionShuffle since that other method was in calss 3
+	    for (int k = size - 1; k > 0; k--) {
+	        int r = (int) (Math.random() * (k + 1)); 
+	        Card4 temp = cards.get(k);
+	        cards.set(k, cards.get(r));
+	        cards.set(r, temp);
+	    }
 	}
 
 	/**
@@ -115,4 +121,5 @@ public class Deck4 {
 		rtn = rtn + "\n";
 		return rtn;
 	}
+
 }

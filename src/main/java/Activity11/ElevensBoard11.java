@@ -127,7 +127,13 @@ public class ElevensBoard11 extends Board11 {
 	 */
 	public boolean playIfPossible() {
 		/* *** TO BE IMPLEMENTED IN ACTIVITY 11 *** */
-		return false; // REPLACE !
+		if (playPairSum11IfPossible()) {
+			return true;
+		}
+		if (playJQKIfPossible()) {
+			return true;
+		}
+		return false;
 	}
 
 	/**
@@ -138,7 +144,29 @@ public class ElevensBoard11 extends Board11 {
 	 */
 	private boolean playPairSum11IfPossible() {
 		/* *** TO BE IMPLEMENTED IN ACTIVITY 11 *** */
-		 return false; // REPLACE !
+		List<Integer> cIndexes = cardIndexes();
+
+		for (int i = 0; i < cIndexes.size(); i++) {
+			int k1 = cIndexes.get(i);
+			Card11 c1 = cardAt(k1);
+			if (c1 == null) continue;
+
+			for (int j = i + 1; j < cIndexes.size(); j++) {
+				int k2 = cIndexes.get(j);
+				Card11 c2 = cardAt(k2);
+				if (c2 == null) continue;
+
+				if (c1.pointValue() + c2.pointValue() == 11) {
+					// Found a valid pair; replace these two.
+					List<Integer> toReplace = new ArrayList<Integer>();
+					toReplace.add(k1);
+					toReplace.add(k2);
+					replaceSelectedCards(toReplace);
+					return true;
+				}
+			}
+		}
+		return false; 
 	}
 
 	/**
@@ -149,6 +177,36 @@ public class ElevensBoard11 extends Board11 {
 	 */
 	private boolean playJQKIfPossible() {
 		/* *** TO BE IMPLEMENTED IN ACTIVITY 11 *** */
-		return false; // REPLACE !
+		List<Integer> cIndexes = cardIndexes();
+
+		int jackIndex = -1;
+		int queenIndex = -1;
+		int kingIndex = -1;
+
+		for (Integer kObj : cIndexes) {
+			int k = kObj.intValue();
+			Card11 c = cardAt(k);
+			if (c == null) continue;
+
+			String rank = c.rank();
+			if (rank.equals("jack")) {
+				jackIndex = k;
+			} else if (rank.equals("queen")) {
+				queenIndex = k;
+			} else if (rank.equals("king")) {
+				kingIndex = k;
+			}
+		}
+
+		if (jackIndex != -1 && queenIndex != -1 && kingIndex != -1) {
+			List<Integer> toReplace = new ArrayList<Integer>();
+			toReplace.add(jackIndex);
+			toReplace.add(queenIndex);
+			toReplace.add(kingIndex);
+			replaceSelectedCards(toReplace);
+			return true;
+		}
+
+		return false;
 	}
 }

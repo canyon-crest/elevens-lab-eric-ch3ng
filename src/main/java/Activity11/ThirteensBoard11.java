@@ -118,7 +118,13 @@ public class ThirteensBoard11 extends Board11 {
 	 */
 	public boolean playIfPossible() {
 		/* *** TO BE IMPLEMENTED IN ACTIVITY 11 *** */
-		return false; // REPLACE !
+		if (playPairSum13IfPossible()) {
+			return true;
+		}
+		if (playKingIfPossible()) {
+			return true;
+		}
+		return false;
 	}
 
 	/**
@@ -129,8 +135,27 @@ public class ThirteensBoard11 extends Board11 {
 	 */
 	private boolean playPairSum13IfPossible() {
 		/* *** TO BE IMPLEMENTED IN ACTIVITY 11 *** */
-		return false; // REPLACE !
-	}
+		List<Integer> cIndexes = cardIndexes();
+
+		for (int i = 0; i < cIndexes.size(); i++) {
+			int k1 = cIndexes.get(i);
+			Card11 c1 = cardAt(k1);
+			if (c1 == null) continue;
+
+			for (int j = i + 1; j < cIndexes.size(); j++) {
+				int k2 = cIndexes.get(j);
+				Card11 c2 = cardAt(k2);
+				if (c2 == null) continue;
+				if (c1.pointValue() + c2.pointValue() == 13) {
+					List<Integer> toReplace = new ArrayList<Integer>();
+					toReplace.add(k1);
+					toReplace.add(k2);
+					replaceSelectedCards(toReplace);
+					return true;
+				}
+			}
+		}
+		return false; 	}
 
 	/**
 	 * Looks for a King.
@@ -140,6 +165,19 @@ public class ThirteensBoard11 extends Board11 {
 	 */
 	private boolean playKingIfPossible() {
 		/* *** TO BE IMPLEMENTED IN ACTIVITY 11 *** */
-		return false; // REPLACE !
+		List<Integer> cIndexes = cardIndexes();
+
+		for (Integer kObj : cIndexes) {
+			int k = kObj.intValue();
+			Card11 c = cardAt(k);
+			if (c != null && c.rank().equals("king")) {
+
+				List<Integer> toReplace = new ArrayList<Integer>();
+				toReplace.add(k);
+				replaceSelectedCards(toReplace);
+				return true;
+			}
+		}
+		return false;
 	}
 }

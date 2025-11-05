@@ -55,6 +55,11 @@ public class ElevensBoard9 extends Board9 {
 	@Override
 	public boolean isLegal(List<Integer> selectedCards) {
 		/* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
+		if (selectedCards.size() == 2) {
+			return containsPairSum11(selectedCards);
+		} else if (selectedCards.size() == 3) {
+			return containsJQK(selectedCards);
+		}
 		return false;
 	}
 
@@ -69,7 +74,8 @@ public class ElevensBoard9 extends Board9 {
 	@Override
 	public boolean anotherPlayIsPossible() {
 		/* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
-		return false;
+		List<Integer> indexes = cardIndexes();
+		return containsPairSum11(indexes) || containsJQK(indexes);
 	}
 
 	/**
@@ -82,6 +88,23 @@ public class ElevensBoard9 extends Board9 {
 	 */
 	private boolean containsPairSum11(List<Integer> selectedCards) {
 		/* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
+		for (int i = 0; i < selectedCards.size(); i++) {
+			int idx1 = selectedCards.get(i);
+			Card9 c1 = cardAt(idx1);
+			if (c1 == null) {
+				continue;
+			}
+			for (int j = i + 1; j < selectedCards.size(); j++) {
+				int idx2 = selectedCards.get(j);
+				Card9 c2 = cardAt(idx2);
+				if (c2 == null) {
+					continue;
+				}
+				if (c1.pointValue() + c2.pointValue() == 11) {
+					return true;
+				}
+			}
+		}
 		return false;
 	}
 
@@ -95,6 +118,27 @@ public class ElevensBoard9 extends Board9 {
 	 */
 	private boolean containsJQK(List<Integer> selectedCards) {
 		/* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
-		return false;
+		boolean foundJack = false;
+		boolean foundQueen = false;
+		boolean foundKing = false;
+
+		for (Integer idxObj : selectedCards) {
+			int idx = idxObj;
+			Card9 c = cardAt(idx);
+			if (c == null) {
+				continue;
+			}
+
+			String rank = c.rank();
+			if (rank.equals("jack")) {
+				foundJack = true;
+			} else if (rank.equals("queen")) {
+				foundQueen = true;
+			} else if (rank.equals("king")) {
+				foundKing = true;
+			}
+		}
+
+		return foundJack && foundQueen && foundKing;
 	}
 }
